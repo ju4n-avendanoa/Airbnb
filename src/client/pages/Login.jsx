@@ -19,12 +19,14 @@ function Login() {
             type="email"
             id="email"
             onChange={handleChange(setEmail)}
+            value={email}
             placeholder="your@email.com"
           />
           <input
             type="password"
             id="password"
             onChange={handleChange(setPassword)}
+            value={password}
             placeholder="password"
           />
           <button>Login</button>
