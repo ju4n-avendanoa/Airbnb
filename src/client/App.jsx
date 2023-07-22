@@ -5,6 +5,9 @@ import { Outlet, Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Indexpage from "./pages/Indexpage";
+import axios from "axios";
+
+axios.defaults.baseURL = "http://localhost:5000";
 
 function Layout() {
   return (
