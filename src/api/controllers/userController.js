@@ -26,7 +26,7 @@ export async function logUserHandler(req, res) {
   } else {
     res
       .cookie("token", token, {
-        maxAge: 60000,
+        maxAge: 600000000,
         httpOnly: true,
       })
       .json(user);
