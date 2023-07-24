@@ -9,4 +9,8 @@ userRouter.post("/register", userController.createUserHandler);
 
 userRouter.post("/login", userController.logUserHandler);
 
+userRouter.delete("/users/delete", userController.deleteUsersHandler);
+
+userRouter.get("/profile", userController.profileHandler);
+
 export default userRouter;

@@ -1,12 +1,15 @@
-import React from "react";
+import { useContext } from "react";
 import {
   GlobeAmericasIcon,
   MagnifyingGlassCircleIcon,
   UserCircleIcon,
   Bars3Icon,
 } from "@heroicons/react/24/solid";
+import { UserContext } from "../UserContext";
 
 function Header() {
+  const { user } = useContext(UserContext);
+
   return (
     <header>
       <div className="flex items-center justify-around">
@@ -42,6 +45,7 @@ function Header() {
           <a href="/login">
             <UserCircleIcon className="w-6 h-6  fill-[#60A5FA]" />
           </a>
+          {!!user && <span>{user.name}</span>}
         </div>
       </div>
     </header>

@@ -1,9 +1,13 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { Navigate } from "react-router-dom";
+import { UserContext } from "../UserContext";
 
 function Login() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [redirect, setRedirect] = useState(false);
+  const { setUser } = useContext(UserContext);
 
   const handleChange =
     (setState) =>
@@ -14,15 +18,20 @@ function Login() {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      await axios.post("/login", {
+      const { data } = await axios.post("/login", {
         email,
         password,
       });
-      alert("Successful");
+      setUser(data);
+      setRedirect(true);
     } catch (error) {
       alert("There was a problem");
     }
   };
+
+  if (redirect) {
+    return <Navigate to={"/"} />;
+  }
 
   return (
     <div className="mt-4 grow flex items-center justify-around">
@@ -46,7 +55,7 @@ function Login() {
           <button>Login</button>
         </form>
         <p className="text-center">
-          Don't have an account yet?{" "}
+          Don&apos;t have an account yet?{" "}
           <a href="/register" className="text-blue-400 ml-2">
             Sign up here
           </a>

@@ -3,6 +3,7 @@ const { omit } = pkg;
 import userModel from "../model/userModel.js";
 import "dotenv/config";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 export async function createUser({ name, email, password }) {
   try {
@@ -32,7 +33,11 @@ export async function logUser({ email, password }) {
     if (!user) return false;
     const passIsOk = await bcrypt.compare(password, user.password);
     if (!passIsOk) return false;
-    return user;
+    const token = await jwt.sign(
+      { email: user.email, id: user._id, name: user.name },
+      process.env.JWT_SECRET
+    );
+    return { token, user: omit(user.toJSON(), "password") };
   } catch (error) {
     console.log(error);
   }

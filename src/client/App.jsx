@@ -6,8 +6,10 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Indexpage from "./pages/Indexpage";
 import axios from "axios";
+import { UserContextProvider } from "./UserContext.jsx";
 
 axios.defaults.baseURL = "http://localhost:5000";
+axios.defaults.withCredentials = true;
 
 function Layout() {
   return (
@@ -20,7 +22,7 @@ function Layout() {
 
 function App() {
   return (
-    <>
+    <UserContextProvider>
       <Routes>
         <Route to="/" element={<Layout />}>
           <Route index element={<Indexpage />} />
@@ -28,7 +30,7 @@ function App() {
           <Route path="/register" element={<Register />} />
         </Route>
       </Routes>
-    </>
+    </UserContextProvider>
   );
 }
 
