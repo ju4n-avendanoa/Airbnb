@@ -53,3 +53,7 @@ export async function profileHandler(req, res) {
     res.json(null);
   }
 }
+
+export async function logoutHandler(req, res) {
+  res.cookie("token", "").json(true);
+}

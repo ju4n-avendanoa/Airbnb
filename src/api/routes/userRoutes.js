@@ -13,4 +13,6 @@ userRouter.delete("/users/delete", userController.deleteUsersHandler);
 
 userRouter.get("/profile", userController.profileHandler);
 
+userRouter.post("/logout", userController.logoutHandler);
+
 export default userRouter;

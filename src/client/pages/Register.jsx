@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 function Register() {
   const [email, setEmail] = useState();
@@ -38,6 +39,7 @@ function Register() {
             id="name"
             onChange={handleChange(setName)}
             placeholder="your name"
+            className="forms"
             required
           />
           <input
@@ -45,6 +47,7 @@ function Register() {
             id="email"
             onChange={handleChange(setEmail)}
             placeholder="your@email.com"
+            className="forms"
             required
           />
           <input
@@ -52,15 +55,16 @@ function Register() {
             id="password"
             onChange={handleChange(setPassword)}
             placeholder="password"
+            className="forms"
             required
           />
           <button>Sign up</button>
         </form>
         <p className="text-center">
           Already have an account?{" "}
-          <a href="/login" className="text-blue-400 ml-2">
+          <Link to={"/login"} className="text-blue-400 ml-2">
             Login here
-          </a>
+          </Link>
         </p>
       </div>
     </div>

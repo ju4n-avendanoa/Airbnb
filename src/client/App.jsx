@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Header from "./components/Header";
 import "./styles/App.css";
 import { Outlet, Route, Routes } from "react-router-dom";
@@ -29,7 +28,8 @@ function App() {
           <Route index element={<Indexpage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/account" element={<UserAccount />} />
+          <Route path="/account/:subpage?" element={<UserAccount />} />
+          <Route path="/account/:subpage/:action" element={<UserAccount />} />
         </Route>
       </Routes>
     </UserContextProvider>

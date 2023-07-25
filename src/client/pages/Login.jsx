@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useContext, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { UserContext } from "../UserContext";
 
 function Login() {
@@ -43,6 +43,7 @@ function Login() {
             id="email"
             onChange={handleChange(setEmail)}
             placeholder="your@email.com"
+            className="forms"
             required
           />
           <input
@@ -50,15 +51,16 @@ function Login() {
             id="password"
             onChange={handleChange(setPassword)}
             placeholder="password"
+            className="forms"
             required
           />
           <button>Login</button>
         </form>
         <p className="text-center">
           Don&apos;t have an account yet?{" "}
-          <a href="/register" className="text-blue-400 ml-2">
+          <Link to={"/register"} className="text-blue-400 ml-2">
             Sign up here
-          </a>
+          </Link>
         </p>
       </div>
     </div>
