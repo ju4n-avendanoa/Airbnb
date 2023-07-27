@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
   PlusSmallIcon,
@@ -10,6 +10,7 @@ import {
   BoltIcon,
   CakeIcon,
 } from "@heroicons/react/24/solid";
+import { CloudArrowUpIcon } from "@heroicons/react/24/outline";
 import "../styles/index.css";
 import axios from "axios";
 
@@ -19,7 +20,8 @@ function PlacesPage() {
   const [title, setTitle] = useState("");
   const [address, setAddress] = useState("");
   const [selectedFiles, setSelectedFiles] = useState([]);
-  const [photoLink, setPhotoLink] = useState();
+  const [photoLink, setPhotoLink] = useState("");
+  const [addedPhotos, setAddedPhotos] = useState([]);
   const [description, setDescription] = useState("");
   const [perks, setPerks] = useState([]);
   const [extraInfo, setExtraInfo] = useState("");
@@ -33,6 +35,15 @@ function PlacesPage() {
     await axios.post("/account/places/new");
   }
 
+  const handleChangePerk = ({ target }) => {
+    const { checked, name } = target;
+    if (checked) {
+      setPerks((prev) => [...prev, name]);
+    } else {
+      setPerks((prev) => prev.filter((item) => item !== name));
+    }
+  };
+
   const handleChange =
     (setState) =>
     ({ target }) => {
@@ -45,7 +56,28 @@ function PlacesPage() {
     );
   };
 
-  function addPhotoByLink() {}
+  async function addPhotoByLink(e) {
+    e.preventDefault();
+    const { data: filename } = await axios.post("/upload-by-link", {
+      link: photoLink,
+    });
+    setAddedPhotos((prev) => [...prev, filename]);
+    setPhotoLink("");
+  }
+
+  async function uploadPhoto({ target }) {
+    const files = target.files;
+    const formData = new FormData();
+    for (let i = 0; i < files.length; i++) {
+      formData.append("photos", files[i]);
+    }
+    const { data: filenames } = await axios.post("/upload", formData, {
+      headers: {
+        "Content-type": "multipart/form-data",
+      },
+    });
+    setAddedPhotos((prev) => [...prev, ...filenames]);
+  }
 
   return (
     <div>
@@ -88,32 +120,39 @@ function PlacesPage() {
                   type="text"
                   className="forms"
                   onChange={handleChange(setPhotoLink)}
+                  value={photoLink}
                 />
-                <button className="w-[10vw]">add</button>
+                <button className="w-[10vw]" onClick={addPhotoByLink}>
+                  add
+                </button>
               </div>
+              {addedPhotos.length > 0 && (
+                <div>
+                  <h3>Archivos seleccionados:</h3>
+                  <ul className="grid grid-cols-3 gap-2">
+                    {addedPhotos.map((filename, index) => (
+                      <li key={index}>
+                        <img
+                          src={"http://localhost:5000/upload/" + filename}
+                          alt="filename"
+                          className="rounded-2xl w-full h-full"
+                        />
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              <label className="h-32 cursor-pointer flex items-center gap-1 justify-center border bg-transparent rounded-2xl p-2 text-2xl text-gray-600">
+                <input
+                  type="file"
+                  className="hidden"
+                  onChange={uploadPhoto}
+                  multiple
+                />
+                <CloudArrowUpIcon className="w-10 h-10" />
+                upload
+              </label>
             </div>
-            {selectedFiles.length > 0 && (
-              <div>
-                <h3>Archivos seleccionados:</h3>
-                <ul className="grid grid-cols-6">
-                  {selectedFiles.map((file, index) => (
-                    <li key={index}>
-                      <img
-                        onClick={() => handleRemoveFile(index)}
-                        src={URL.createObjectURL(file)}
-                        alt={file.name}
-                        style={{
-                          maxWidth: "100px",
-                          maxHeight: "100px",
-                          margin: "5px",
-                        }}
-                      />
-                      {URL.createObjectURL(file)}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
             <div className="my-2">
               <h2 className="font-bold">Description</h2>
               <p className="text-gray-500">description of the place</p>
@@ -130,37 +169,78 @@ function PlacesPage() {
               </p>
               <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-2 py-2 h-auto">
                 <label htmlFor="wi-fi" className="perks">
-                  <input type="checkbox" id="wi-fi" />
+                  <input
+                    type="checkbox"
+                    name="Wi-fi"
+                    onChange={handleChangePerk}
+                    id="wi-fi"
+                  />
                   <WifiIcon className="h-6" />
                   Wi-fi
                 </label>
                 <label htmlFor="Pet" className="perks">
-                  <input type="checkbox" id="Pet" className="check" />
+                  <input
+                    type="checkbox"
+                    name="Pet friendly"
+                    onChange={handleChangePerk}
+                    id="Pet"
+                    className="check"
+                  />
                   <HandThumbUpIcon className="h-6" />
                   Pet&nbsp;friendly
                 </label>
                 <label htmlFor="parking" className="perks">
-                  <input type="checkbox" id="parking" className="check" />
+                  <input
+                    type="checkbox"
+                    name="Free parking spot"
+                    onChange={handleChangePerk}
+                    id="parking"
+                    className="check"
+                  />
                   <TruckIcon className="h-6" />
                   Free&nbsp;parking&nbsp;spot
                 </label>
                 <label htmlFor="tv" className="perks">
-                  <input type="checkbox" id="tv" className="check" />
+                  <input
+                    type="checkbox"
+                    name="TV"
+                    onChange={handleChangePerk}
+                    id="tv"
+                    className="check"
+                  />
                   <TvIcon className="h-6" />
                   TV
                 </label>
                 <label htmlFor="entrance" className="perks">
-                  <input type="checkbox" id="entrance" className="check" />
+                  <input
+                    type="checkbox"
+                    name="Private entrance"
+                    onChange={handleChangePerk}
+                    id="entrance"
+                    className="check"
+                  />
                   <ArrowLeftCircleIcon className="h-6" />
                   Private&nbsp;entrance
                 </label>
                 <label htmlFor="Kitchen" className="perks">
-                  <input type="checkbox" id="Kitchen" className="check" />
+                  <input
+                    type="checkbox"
+                    name="Kitchen"
+                    onChange={handleChangePerk}
+                    id="Kitchen"
+                    className="check"
+                  />
                   <CakeIcon className="h-6" />
                   Kitchen
                 </label>
                 <label htmlFor="Washer" className="perks">
-                  <input type="checkbox" id="Washer" className="check" />
+                  <input
+                    type="checkbox"
+                    name="Washer"
+                    onChange={handleChangePerk}
+                    id="Washer"
+                    className="check"
+                  />
                   <BoltIcon className="h-6" />
                   Washer
                 </label>

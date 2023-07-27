@@ -1,11 +1,13 @@
-export async function uploadPlaceHandler(req, res) {
-  const {
-    title,
-    address,
-    description,
-    extraInfo,
-    checkIn,
-    checkOut,
-    maxGuests,
-  } = req.body;
+import { uploadPhoto, uploadPhotoByLink } from "../services/photosService.js";
+
+export async function uploadPlaceHandlerByLink(req, res) {
+  const { link } = req.body;
+  const name = await uploadPhotoByLink(link);
+  res.json(name);
+}
+
+export function uploadPlaceHandler(req, res) {
+  const files = req.files;
+  const uploadedFiles = uploadPhoto(files);
+  res.json(uploadedFiles);
 }

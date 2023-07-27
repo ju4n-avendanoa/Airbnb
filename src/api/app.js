@@ -3,9 +3,8 @@ import userRouter from "./routes/userRoutes.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import placeRouter from "./routes/placesRoutes.js";
-import fileUpload from "express-fileupload";
 import { fileURLToPath } from "url";
-import { dirname } from "path";
+import { dirname, join } from "path";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -19,12 +18,7 @@ app.use(
     credentials: true,
   })
 );
-app.use(
-  fileUpload({
-    useTempFiles: true,
-    tempFileDir: __dirname + "/uploads",
-  })
-);
+app.use("/upload", express.static(join(__dirname, "/uploads")));
 app.use(cookieParser());
 app.use(userRouter);
 app.use(placeRouter);
