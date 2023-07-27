@@ -42,7 +42,7 @@ export async function deleteUsersHandler(req, res) {
   }
 }
 
-export async function profileHandler(req, res) {
+export function profileHandler(req, res) {
   const { token } = req.cookies;
   if (token) {
     jwt.verify(token, process.env.JWT_SECRET, (err, user) => {

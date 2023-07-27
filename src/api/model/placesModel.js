@@ -4,7 +4,7 @@ const placesSchema = new mongoose.Schema(
   {
     owner: { type: mongoose.Schema.Types.ObjectId, ref: "users" },
     title: { type: String },
-    addres: { type, String },
+    addres: { type: String },
     photos: { type: [String] },
     description: { type: String },
     perks: { type: [String] },

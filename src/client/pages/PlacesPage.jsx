@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   PlusSmallIcon,
   WifiIcon,
@@ -28,11 +28,23 @@ function PlacesPage() {
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [maxGuests, setMaxGuests] = useState(1);
+  const navigate = useNavigate();
 
   async function handleSubmit(e) {
     e.preventDefault();
-
-    await axios.post("/account/places/new");
+    const placeData = {
+      title,
+      address,
+      addedPhotos,
+      description,
+      perks,
+      extraInfo,
+      checkIn,
+      checkOut,
+      maxGuests,
+    };
+    await axios.post("/places", placeData);
+    navigate("/account/places");
   }
 
   const handleChangePerk = ({ target }) => {
@@ -292,7 +304,6 @@ function PlacesPage() {
           </form>
         </div>
       )}
-      juan@gmail.com
     </div>
   );
 }
