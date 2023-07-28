@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .forms {
-  @apply w-full my-2 py-2 px-3 border border-black rounded-xl;
+  @apply w-full py-2 px-3 border border-black rounded-xl;
 }
 
 button {

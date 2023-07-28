@@ -20,3 +20,8 @@ export async function uploadPlaceHandler(req, res) {
   console.log(newPlace);
   res.json(newPlace);
 }
+
+// export async function getAllPlacesHandler(req, res) {
+//   const { token } = req.cookies;
+//   const places = await getAllPlaces(token);
+// }

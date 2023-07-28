@@ -1,13 +1,13 @@
 import axios from "axios";
-import React, { useContext, useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../UserContext";
 
 function Login() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const [redirect, setRedirect] = useState(false);
   const { setUser } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const handleChange =
     (setState) =>
@@ -23,15 +23,11 @@ function Login() {
         password,
       });
       setUser(data);
-      setRedirect(true);
+      navigate("/");
     } catch (error) {
       alert("There was a problem");
     }
   };
-
-  if (redirect) {
-    return <Navigate to={"/"} />;
-  }
 
   return (
     <div className="mt-4 grow flex items-center justify-around">

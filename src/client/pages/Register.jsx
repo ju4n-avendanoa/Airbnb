@@ -1,12 +1,12 @@
 import axios from "axios";
-import React from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Register() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [name, setName] = useState();
+  const navigate = useNavigate();
 
   const handleChange =
     (setState) =>
@@ -17,13 +17,12 @@ function Register() {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      const user = await axios.post("/register", {
+      await axios.post("/register", {
         name,
         email,
         password,
       });
-      console.log(user);
-      alert("Successful");
+      navigate("/login");
     } catch (error) {
       alert("problem");
     }
@@ -61,7 +60,7 @@ function Register() {
           <button>Sign up</button>
         </form>
         <p className="text-center">
-          Already have an account?{" "}
+          Already have an account?
           <Link to={"/login"} className="text-blue-400 ml-2">
             Login here
           </Link>

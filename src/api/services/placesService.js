@@ -37,3 +37,13 @@ export async function uploadPlace(
   );
   return newPlace;
 }
+
+export async function getAllPlaces(token) {
+  const id = jwt.verify(token, process.env.JWT_SECRET, async (err, user) => {
+    if (err) throw new Error();
+    return user.id;
+  });
+
+  const places = await PlacesModel.find({ owner: id });
+  return places;
+}
