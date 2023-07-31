@@ -13,7 +13,7 @@ const placeRouter = Router();
 
 const photosMiddleware = multer({ dest: photoPath });
 
-placeRouter.post("/upload-by-link", placesController.uploadPhotoHandlerByLink);
+placeRouter.post("/upload-by-link", placesController.uploadPhotoByLinkHandler);
 
 placeRouter.post(
   "/upload",

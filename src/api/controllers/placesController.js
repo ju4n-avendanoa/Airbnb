@@ -1,7 +1,7 @@
 import { uploadPhoto, uploadPhotoByLink } from "../services/photosService.js";
 import { uploadPlace } from "../services/placesService.js";
 
-export async function uploadPhotoHandlerByLink(req, res) {
+export async function uploadPhotoByLinkHandler(req, res) {
   const { link } = req.body;
   const name = await uploadPhotoByLink(link);
   res.json(name);

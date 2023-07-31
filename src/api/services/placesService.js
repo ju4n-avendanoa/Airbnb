@@ -1,5 +1,5 @@
 import PlacesModel from "../model/placesModel.js";
-import jwt from "jsonwebtoken";
+import verifyToken from "../utils/verifyToken.js";
 
 export async function uploadPlace(
   {
@@ -15,35 +15,25 @@ export async function uploadPlace(
   },
   token
 ) {
-  const newPlace = jwt.verify(
-    token,
-    process.env.JWT_SECRET,
-    async (err, user) => {
-      if (err) throw new Error();
-      const newPlace = await PlacesModel.create({
-        owner: user.id,
-        title,
-        addres,
-        photos: addedPhotos,
-        description,
-        perks,
-        extraInfo,
-        checkIn,
-        checkOut,
-        maxGuets,
-      });
-      return newPlace;
-    }
-  );
+  const user = verifyToken(token);
+  const newPlace = await PlacesModel.create({
+    owner: user.id,
+    title,
+    addres,
+    photos: addedPhotos,
+    description,
+    perks,
+    extraInfo,
+    checkIn,
+    checkOut,
+    maxGuets,
+  });
   return newPlace;
 }
 
 export async function getAllPlaces(token) {
-  const id = jwt.verify(token, process.env.JWT_SECRET, async (err, user) => {
-    if (err) throw new Error();
-    return user.id;
-  });
+  const user = verifyToken(token);
 
-  const places = await PlacesModel.find({ owner: id });
+  const places = await PlacesModel.find({ owner: user.id });
   return places;
 }
