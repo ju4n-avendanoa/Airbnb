@@ -12,6 +12,8 @@ dist
 dist-ssr
 *.local
 .env
+src/api/uploads
+
 
 # Editor directories and files
 .vscode/*

@@ -1,5 +1,7 @@
 import { CloudArrowUpIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
+import { useContext } from "react";
+import { UserContext } from "../UserContext";
 
 function UploadPhotos({
   photoLink,
@@ -8,6 +10,8 @@ function UploadPhotos({
   setAddedPhotos,
   handleChange,
 }) {
+  const { user } = useContext(UserContext);
+
   async function uploadPhoto({ target }) {
     const files = target.files;
     const formData = new FormData();
@@ -53,7 +57,7 @@ function UploadPhotos({
             {addedPhotos.map((filename, index) => (
               <li key={index}>
                 <img
-                  src={"http://localhost:5000/upload/" + filename}
+                  src={`http://localhost:5000/upload/${user.id}/` + filename}
                   alt="filename"
                   className="rounded-2xl w-full h-full"
                 />

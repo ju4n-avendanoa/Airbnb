@@ -25,4 +25,6 @@ placeRouter.post("/places", placesController.uploadPlaceHandler);
 
 // placeRouter.get("/places", placesController.getAllPlacesHandler);
 
+placeRouter.get("/upload", (req, res) => {});
+
 export default placeRouter;

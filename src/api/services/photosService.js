@@ -17,7 +17,7 @@ export async function uploadPhotoByLink(link, token) {
   const name = Date.now() + ".jpg";
   await imageDownloader.image({
     url: link,
-    dest: photoPath,
+    dest: photoPath + "/" + name,
   });
   return name;
 }

@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import placeRouter from "./routes/placesRoutes.js";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
+import verifyToken from "./utils/verifyToken.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -18,8 +19,10 @@ app.use(
     credentials: true,
   })
 );
-app.use("/upload", express.static(join(__dirname, "/uploads")));
 app.use(cookieParser());
+
+app.use("/upload", express.static(join(__dirname, "/uploads")));
+
 app.use(userRouter);
 app.use(placeRouter);
 
