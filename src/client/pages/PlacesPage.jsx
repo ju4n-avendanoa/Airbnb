@@ -16,7 +16,7 @@ function PlacesPage() {
       setPlaces(data);
     });
   }, []);
-
+  console.log(places);
   return (
     <div>
       <UserNavbar />
@@ -31,11 +31,23 @@ function PlacesPage() {
       </div>
       <div>
         {places.length > 0 &&
-          places.map((place, key) => (
-            <div className="bg-gray-300 my-8 p-4 rounded-2xl">
+          places.map((place) => (
+            <div className="bg-gray-300 my-8 mx-16 p-4 rounded-2xl">
               <Link to={"/account/places/" + place._id}>
-                <h1>{place.title}</h1>
-                <p>{place.description}</p>
+                <div className="flex items-start">
+                  <img
+                    src={
+                      `http://localhost:5000/upload/${user.id}/` +
+                      place.photos[0]
+                    }
+                    alt="photo"
+                    className="w-32 h-32 rounded-2xl"
+                  />
+                  <div className="mx-4">
+                    <h1 className="font-bold mb-2">{place.title}</h1>
+                    <p className="text-justify">{place.description}</p>
+                  </div>
+                </div>
               </Link>
             </div>
           ))}

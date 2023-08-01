@@ -33,6 +33,7 @@ function FormPage() {
       setCheckOut(data.checkOut);
       setMaxGuests(data.maxGuests);
       setPerks(data.perks);
+      setAddedPhotos(data.photos);
     });
   }, [id]);
 
