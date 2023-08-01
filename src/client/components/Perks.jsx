@@ -8,9 +8,10 @@ import {
   WifiIcon,
 } from "@heroicons/react/24/solid";
 
-function Perks({ setPerks }) {
+function Perks({ selected, setPerks }) {
   const handleChangePerk = ({ target }) => {
     const { checked, name } = target;
+
     if (checked) {
       setPerks((prev) => [...prev, name]);
     } else {
@@ -27,6 +28,7 @@ function Perks({ setPerks }) {
           <input
             type="checkbox"
             name="Wi-fi"
+            checked={selected.includes("Wi-fi")}
             onChange={handleChangePerk}
             id="wi-fi"
           />
@@ -37,6 +39,7 @@ function Perks({ setPerks }) {
           <input
             type="checkbox"
             name="Pet friendly"
+            checked={selected.includes("Pet friendly")}
             onChange={handleChangePerk}
             id="Pet"
             className="check"
@@ -48,6 +51,7 @@ function Perks({ setPerks }) {
           <input
             type="checkbox"
             name="Free parking spot"
+            checked={selected.includes("Free parking spot")}
             onChange={handleChangePerk}
             id="parking"
             className="check"
@@ -59,6 +63,7 @@ function Perks({ setPerks }) {
           <input
             type="checkbox"
             name="TV"
+            checked={selected.includes("TV")}
             onChange={handleChangePerk}
             id="tv"
             className="check"
@@ -70,6 +75,7 @@ function Perks({ setPerks }) {
           <input
             type="checkbox"
             name="Private entrance"
+            checked={selected.includes("Private entrance")}
             onChange={handleChangePerk}
             id="entrance"
             className="check"
@@ -81,6 +87,7 @@ function Perks({ setPerks }) {
           <input
             type="checkbox"
             name="Kitchen"
+            checked={selected.includes("Kitchen")}
             onChange={handleChangePerk}
             id="Kitchen"
             className="check"
@@ -92,6 +99,7 @@ function Perks({ setPerks }) {
           <input
             type="checkbox"
             name="Washer"
+            checked={selected.includes("Washer")}
             onChange={handleChangePerk}
             id="Washer"
             className="check"

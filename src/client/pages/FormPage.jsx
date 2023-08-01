@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import Perks from "../components/Perks";
 import UploadPhotos from "../components/UploadPhotos";
@@ -19,13 +19,29 @@ function FormPage() {
   const [maxGuests, setMaxGuests] = useState(1);
 
   const navigate = useNavigate();
+  const { id } = useParams();
+
+  useEffect(() => {
+    if (!id) return;
+    axios.get("/places/" + id).then((response) => {
+      const { data } = response;
+      setTitle(data.title);
+      setAddress(data.address);
+      setDescription(data.description);
+      setExtraInfo(data.extraInfo);
+      setCheckIn(data.checkIn);
+      setCheckOut(data.checkOut);
+      setMaxGuests(data.maxGuests);
+      setPerks(data.perks);
+    });
+  }, [id]);
 
   const handleChange =
     (setState) =>
     ({ target }) => {
       setState(target.value);
     };
-
+  console.log(address);
   async function handleSubmit(e) {
     e.preventDefault();
     const placeData = {
@@ -39,8 +55,13 @@ function FormPage() {
       checkOut,
       maxGuests,
     };
-    await axios.post("/places", placeData);
-    navigate("/account/places");
+    if (id) {
+      await axios.patch("places/" + id, placeData);
+      navigate("/account/places");
+    } else {
+      await axios.post("/places", placeData);
+      navigate("/account/places");
+    }
   }
 
   function preInput(title, text) {
@@ -62,6 +83,7 @@ function FormPage() {
               type="text"
               className="forms"
               onChange={handleChange(setTitle)}
+              value={title}
             />
           </div>
           <div className="my-2">
@@ -69,6 +91,7 @@ function FormPage() {
             <input
               type="text"
               className="forms"
+              value={address}
               onChange={handleChange(setAddress)}
             />
           </div>
@@ -84,15 +107,17 @@ function FormPage() {
             <textarea
               className="description border"
               rows="10"
+              value={description}
               onChange={handleChange(setDescription)}
             ></textarea>
           </div>
-          <Perks setPerks={setPerks} />
+          <Perks selected={perks} setPerks={setPerks} />
           <div className="my-2">
             {preInput("Extra Info", "House rules, etc")}
             <textarea
               className="description border"
               rows="10"
+              value={extraInfo}
               onChange={handleChange(setExtraInfo)}
             ></textarea>
           </div>
@@ -105,25 +130,28 @@ function FormPage() {
               <label htmlFor="">
                 Check in
                 <input
-                  type="text"
+                  type="number"
                   className="forms font-normal"
                   onChange={handleChange(setCheckIn)}
+                  value={checkIn}
                 />
               </label>
               <label htmlFor="">
                 Check out
                 <input
-                  type="text"
+                  type="number"
                   className="forms font-normal"
                   onChange={handleChange(setCheckOut)}
+                  value={checkOut}
                 />
               </label>
               <label htmlFor="">
                 Max guests number
                 <input
-                  type="text"
+                  type="number"
                   className="forms font-normal"
                   onChange={handleChange(setMaxGuests)}
+                  value={maxGuests}
                 />
               </label>
             </div>
