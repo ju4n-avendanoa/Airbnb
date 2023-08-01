@@ -9,8 +9,9 @@ export async function uploadPhotoByLinkHandler(req, res) {
 }
 
 export function uploadPhotoHandler(req, res) {
+  const { token } = req.cookies;
   const files = req.files;
-  const uploadedFiles = uploadPhoto(files);
+  const uploadedFiles = uploadPhoto(files, token);
   res.json(uploadedFiles);
 }
 

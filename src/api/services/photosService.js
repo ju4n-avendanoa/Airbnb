@@ -8,7 +8,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 export async function uploadPhotoByLink(link, token) {
-  const user = await verifyToken(token);
+  const user = verifyToken(token);
   const photoPath = join(__dirname, "/../uploads/", user.id);
   const dirExists = fs.existsSync(photoPath);
   if (!dirExists) {
@@ -22,13 +22,19 @@ export async function uploadPhotoByLink(link, token) {
   return name;
 }
 
-export function uploadPhoto(files) {
+export function uploadPhoto(files, token) {
   const uploadedFiles = [];
+  const user = verifyToken(token);
+  const photoPath = join(__dirname, "/../uploads/", user.id);
+  const dirExists = fs.existsSync(photoPath);
+  if (!dirExists) {
+    fs.mkdirSync(photoPath);
+  }
   for (let i = 0; i < files.length; i++) {
     const { originalname, path, filename } = files[i];
     const nameArr = originalname.split(".");
     const ext = nameArr[nameArr.length - 1];
-    const newPath = path + "." + ext;
+    const newPath = photoPath + "." + ext;
     fs.renameSync(path, newPath);
     uploadedFiles.push(filename + "." + ext);
   }

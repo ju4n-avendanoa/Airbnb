@@ -5,7 +5,7 @@ function UserNavbar() {
   return (
     <nav className="flex w-full justify-center mt-10 gap-6">
       <NavLink
-        to={"/account/profile"}
+        to={"/account/"}
         className={({ isActive }) =>
           isActive
             ? "active"

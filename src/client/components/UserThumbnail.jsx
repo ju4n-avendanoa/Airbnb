@@ -10,7 +10,7 @@ function UserThumbnail() {
       <a href="">
         <Bars3Icon className="w-6 h-6" />
       </a>
-      <Link to={user ? "/account/profile" : "/login"} className="flex gap-2">
+      <Link to={user ? "/account/" : "/login"} className="flex gap-2">
         <UserCircleIcon className="w-6 h-6  fill-[#60A5FA]" />
         {!!user && <span>{user.name}</span>}
       </Link>
