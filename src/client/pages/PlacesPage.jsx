@@ -12,11 +12,11 @@ function PlacesPage() {
   const { user } = useContext(UserContext);
 
   useEffect(() => {
-    axios.get("/places").then(({ data }) => {
+    axios.get("/user-places").then(({ data }) => {
       setPlaces(data);
     });
   }, []);
-  console.log(places);
+
   return (
     <div>
       <UserNavbar />

@@ -1,7 +1,7 @@
-import jwt from "jsonwebtoken";
 import userModel from "../model/userModel.js";
 import { createUser, getUsers, logUser } from "../services/userService.js";
 import "dotenv/config";
+import verifyToken from "../utils/verifyToken.js";
 
 export async function getUsersHandler(req, res) {
   try {
@@ -45,10 +45,8 @@ export async function deleteUsersHandler(req, res) {
 export function profileHandler(req, res) {
   const { token } = req.cookies;
   if (token) {
-    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-      if (err) throw new Error();
-      res.json(user);
-    });
+    const user = verifyToken(token);
+    res.json(user);
   } else {
     res.json(null);
   }

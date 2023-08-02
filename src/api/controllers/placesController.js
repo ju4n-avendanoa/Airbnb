@@ -1,7 +1,8 @@
 import { uploadPhoto, uploadPhotoByLink } from "../services/photosService.js";
 import {
   getAllPlaces,
-  getPlaceById,
+  getAllUSerPlaces,
+  getUserPlaceById,
   updatePlaceById,
   uploadPlace,
 } from "../services/placesService.js";
@@ -27,15 +28,15 @@ export async function uploadPlaceHandler(req, res) {
   res.json(newPlace);
 }
 
-export async function getAllPlacesHandler(req, res) {
+export async function getAllUserPlacesHandler(req, res) {
   const { token } = req.cookies;
-  const places = await getAllPlaces(token);
+  const places = await getAllUSerPlaces(token);
   res.json(places);
 }
 
-export async function getPlaceByIdHandler(req, res) {
+export async function getUserPlaceByIdHandler(req, res) {
   const { id } = req.params;
-  const place = await getPlaceById(id);
+  const place = await getUserPlaceById(id);
   res.json(place);
 }
 
@@ -45,4 +46,9 @@ export async function updatePlaceByIdHandler(req, res) {
   const placeProperties = req.body;
   const place = await updatePlaceById(id, token, placeProperties);
   res.json(place);
+}
+
+export async function getAllPlacesHandler(req, res) {
+  const places = await getAllPlaces();
+  res.json(places);
 }

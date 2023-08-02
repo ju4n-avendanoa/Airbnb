@@ -31,13 +31,13 @@ export async function uploadPlace(
   return newPlace;
 }
 
-export async function getAllPlaces(token) {
+export async function getAllUSerPlaces(token) {
   const user = verifyToken(token);
   const places = await PlacesModel.find({ owner: user.id });
   return places;
 }
 
-export async function getPlaceById(id) {
+export async function getUserPlaceById(id) {
   const place = await PlacesModel.findById(id);
   return place;
 }
@@ -71,4 +71,9 @@ export async function updatePlaceById(
     maxGuests,
   });
   return place;
+}
+
+export async function getAllPlaces() {
+  const places = await PlacesModel.find();
+  return places;
 }

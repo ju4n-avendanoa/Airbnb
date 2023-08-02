@@ -23,9 +23,11 @@ placeRouter.post("/upload-by-link", placesController.uploadPhotoByLinkHandler);
 
 placeRouter.post("/places", placesController.uploadPlaceHandler);
 
-placeRouter.get("/places", placesController.getAllPlacesHandler);
+placeRouter.get("/user-places", placesController.getAllUserPlacesHandler);
 
-placeRouter.get("/places/:id", placesController.getPlaceByIdHandler);
+placeRouter.get("/user-places/:id", placesController.getUserPlaceByIdHandler);
+
+placeRouter.get("/places", placesController.getAllPlacesHandler);
 
 placeRouter.patch("/places/:id", placesController.updatePlaceByIdHandler);
 

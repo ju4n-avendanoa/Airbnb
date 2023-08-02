@@ -23,7 +23,7 @@ function FormPage() {
 
   useEffect(() => {
     if (!id) return;
-    axios.get("/places/" + id).then((response) => {
+    axios.get("/user-places/" + id).then((response) => {
       const { data } = response;
       setTitle(data.title);
       setAddress(data.address);
@@ -42,7 +42,6 @@ function FormPage() {
     ({ target }) => {
       setState(target.value);
     };
-  console.log(address);
   async function handleSubmit(e) {
     e.preventDefault();
     const placeData = {
