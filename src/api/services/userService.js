@@ -29,6 +29,7 @@ export async function getUsers() {
 
 export async function logUser({ email, password }) {
   try {
+    console.log("entra a la funcion");
     const user = await userModel.findOne({ email });
     if (!user) return false;
     const passIsOk = await bcrypt.compare(password, user.password);

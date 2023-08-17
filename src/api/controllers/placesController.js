@@ -7,16 +7,19 @@ import {
   uploadPlace,
 } from "../services/placesService.js";
 
+//UPLOAD
+
 export async function uploadPhotoByLinkHandler(req, res) {
   const { token } = req.cookies;
   const { link } = req.body;
-  const name = await uploadPhotoByLink(link, token);
-  res.json(name);
+  const photoName = await uploadPhotoByLink(link, token);
+  res.json(photoName);
 }
 
 export function uploadPhotoHandler(req, res) {
   const { token } = req.cookies;
   const files = req.files;
+  console.log(files);
   const uploadedFiles = uploadPhoto(files, token);
   res.json(uploadedFiles);
 }
@@ -27,6 +30,8 @@ export async function uploadPlaceHandler(req, res) {
   const newPlace = await uploadPlace(placeProperties, token);
   res.json(newPlace);
 }
+
+//GET
 
 export async function getAllUserPlacesHandler(req, res) {
   const { token } = req.cookies;
@@ -40,15 +45,17 @@ export async function getUserPlaceByIdHandler(req, res) {
   res.json(place);
 }
 
+export async function getAllPlacesHandler(req, res) {
+  const places = await getAllPlaces();
+  res.json(places);
+}
+
+// UPDATE
+
 export async function updatePlaceByIdHandler(req, res) {
   const { id } = req.params;
   const { token } = req.cookies;
   const placeProperties = req.body;
   const place = await updatePlaceById(id, token, placeProperties);
   res.json(place);
-}
-
-export async function getAllPlacesHandler(req, res) {
-  const places = await getAllPlaces();
-  res.json(places);
 }

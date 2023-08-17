@@ -19,24 +19,27 @@ function Indexpage() {
 
   return (
     <div className="grid grid-cols-4 my-6">
-      {places.length > 0 &&
+      {places.length > 0 ? (
         places.map((place) => (
-          <div className="my-3 mx-6 p-4 rounded-2xl">
+          <div className="my-3 mx-6 p-4 rounded-2xl" key={place._id}>
             <div className="flex flex-col items-center">
-              <img
+              {/* <img
                 src={
                   `http://localhost:5000/upload/${user.id}/` + place.photos[0]
                 }
                 alt="photo"
                 className="w-32 h-32 rounded-2xl"
-              />
+              /> */}
               <div className="mx-4">
                 <h1 className="font-bold mb-2">{place.title}</h1>
                 <p className="text-justify">{place.address}</p>
               </div>
             </div>
           </div>
-        ))}
+        ))
+      ) : (
+        <h1>No hay</h1>
+      )}
     </div>
   );
 }
